@@ -26,6 +26,9 @@ class Page:
         e = self.wait.until(EC.element_to_be_clickable(locator))
         e.click()
 
+    def is_element_active(self, *locator):
+        self.wait.until(EC.element_to_be_clickable(locator))
+
     def wait_for_element_disappear(self, *locator):
         self.wait.until(EC.invisibility_of_element(locator))
 
@@ -43,3 +46,14 @@ class Page:
 
     def verify_url_contains_query(self, query):
         assert query in self.driver.current_url, f'{query} is not in {self.driver.current_url}'
+
+    def store_original_window(self):
+        self.original_window = self.driver.current_window_handle
+
+    def switch_to_new_window(self):
+        self.driver.wait.until(EC.new_window_is_opened)
+        self.driver.switch_to.window(self.driver.window_handles[1])
+
+    def close_window_and_switch_to_old_window(self):
+        self.driver.close()
+        self.driver.switch_to.window(self.original_window)
