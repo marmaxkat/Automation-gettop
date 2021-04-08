@@ -2,6 +2,7 @@ from pages.top_menu import TopMenu
 from pages.checkout_page import Checkout
 from pages.product_page import ProductPage
 from pages.shopping_cart import ShoppingCart
+from pages.product_list_page import ProductList
 
 
 class Application:
@@ -12,3 +13,4 @@ class Application:
         self.checkout_page = Checkout(self.driver)
         self.product_page = ProductPage(self.driver)
         self.shopping_cart = ShoppingCart(self.driver)
+        self.product_list_page = ProductList(self.driver)
