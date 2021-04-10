@@ -27,28 +27,27 @@ class ProductPage(Page):
 
     def verify_correct_page_open(self, query):
         category = query
-        top_menu_links = self.driver.find_elements(*self.TOP_MENU_LINKS)
-        for e in top_menu_links:
-            if e.text == category and category == 'IPHONE':
 
-                n = len(self.driver.find_elements(*self.IPHONE_PRODUCTS_LINKS))
-                i = 0
-                while i < n:
+        if category == 'IPHONE':
 
-                    TopMenu.top_menu_hover(self, category)
+            n = len(self.driver.find_elements(*self.IPHONE_PRODUCTS_LINKS))
+            i = 0
+            while i < n:
+
+                TopMenu.top_menu_hover(self, category)
+                p = self.driver.find_elements(*self.IPHONE_PRODUCTS_LINKS)
+                expected_product = p[i].text
+                sleep(6)
+                p[i].click()
+                p = self.driver.find_elements(*self.IPHONE_PRODUCTS_LINKS)
+
+                current_url = self.driver.current_url
+
+                if 'iphone' not in current_url:
+                    print(f'{p[i].text} link does not work')
+                else:
+                    page_product = self.driver.find_element(*self.PRODUCT_TITLE)
                     p = self.driver.find_elements(*self.IPHONE_PRODUCTS_LINKS)
-                    expected_product = p[i].text
-                    sleep(6)
-                    p[i].click()
-                    p = self.driver.find_elements(*self.IPHONE_PRODUCTS_LINKS)
+                    assert expected_product == page_product.text, f'{expected_product} link opens wrong {page_product.text} product page'
 
-                    current_url = self.driver.current_url
-
-                    if 'iphone' not in current_url:
-                        print(f'{p[i].text} link does not work')
-                    else:
-                        page_product = self.driver.find_element(*self.PRODUCT_TITLE)
-                        p = self.driver.find_elements(*self.IPHONE_PRODUCTS_LINKS)
-                        assert expected_product == page_product.text, f'{expected_product} link opens wrong {page_product.text} product page'
-
-                    i += 1
+                i += 1
