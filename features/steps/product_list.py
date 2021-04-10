@@ -19,3 +19,8 @@ def verify_page_navigation(context):
 @then('Verify User can reset to default sorting by alias {alias}')
 def reset_sort_order(context, alias):
     context.app.product_list_page.select_sort_option(alias)
+
+
+@then('Verify User can see all items under {category}')
+def verify_products_in_category(context, category):
+    context.app.product_list_page.verify_products_in_category(category)

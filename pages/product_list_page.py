@@ -7,6 +7,8 @@ class ProductList(Page):
     SORT_OPTIONS_DROPDOWN = (By.CSS_SELECTOR, 'select.orderby')
     PRODUCT_PAGES_NAV_LINKS = (By.CSS_SELECTOR, '.woocommerce-pagination>ul>li>a')
     SORTED_OPTION = (By.XPATH, "//option[contains(@selected,'selected')]")
+    IPHONE_DROP_DOWN = (By.CSS_SELECTOR, '#menu-item-469>ul.nav-dropdown>li')
+    PRODUCT_LIST = (By.CSS_SELECTOR, '.products div.product')
 
     def select_sort_option(self, alias: str):
         select = Select(self.find_element(*self.SORT_OPTIONS_DROPDOWN))
@@ -29,3 +31,9 @@ class ProductList(Page):
             self.wait_for_element_click(*self.PRODUCT_PAGES_NAV_LINKS)
             nav_links = self.driver.find_elements(*self.PRODUCT_PAGES_NAV_LINKS)
             i += 1
+
+    def verify_products_in_category(self, category):
+        products_in_menu = self.driver.find_elements(*self.IPHONE_DROP_DOWN)
+        products_in_list = self.driver.find_elements(*self.PRODUCT_LIST)
+        assert len(products_in_menu) == len(products_in_list), f'User can see {len(products_in_list)} instead of {len(products_in_menu)}'
+
