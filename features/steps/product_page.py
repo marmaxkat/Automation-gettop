@@ -8,4 +8,4 @@ def add_to_cart_btn_click(context):
 
 @when('Click on cart button')
 def cart_btn_click(context):
-    context.app.product_page.click_cart()
+    context.app.top_menu.click_cart()

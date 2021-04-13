@@ -6,8 +6,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 class TopMenu(Page):
     LOGO = (By.ID, 'logo')
+    CART = (By.CSS_SELECTOR, 'ul.header-nav>li.cart-item>a.header-cart-link')
     TOP_MENU_LINKS = (By.CSS_SELECTOR, '.header-nav>li.menu-item>a')
-    FIRST_MENU_LINK = (By.ID, 'menu-item-468')
+    FIRST_MENU_LINK = (By.XPATH, "//li[@id='menu-item-469']//a[@class='nav-top-link']")
     SLIDER = (By.CSS_SELECTOR, '.slider-wrapper')
     IPHONE_MENU_LINK = (By.XPATH, "//a[@class = 'nav-top-link' and contains(@href,'product-category/iphone')]")
 
@@ -17,6 +18,9 @@ class TopMenu(Page):
     def click_logo(self):
         self.wait_for_element_click(*self.LOGO)
         self.click(*self.LOGO)
+
+    def click_cart(self):
+        self.click(*self.CART)
 
     def click_first_link_top_menu(self):
         self.click(*self.FIRST_MENU_LINK)

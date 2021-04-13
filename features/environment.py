@@ -7,11 +7,30 @@ def browser_init(context):
     """
     :param context: Behave context
     """
-    context.driver = webdriver.Chrome(executable_path='/Users/inna/Documents/GitHub/Automation-gettop/chromedriver')
-    # context.browser = webdriver.Safari()
-    # context.browser = webdriver.Firefox()
+    # options = webdriver.ChromeOptions()
+    # options.add_argument('headless')
+    # context.driver = webdriver.Chrome(chrome_options=options)
 
-    context.driver.maximize_window()
+    # context.driver = webdriver.Chrome(executable_path='/Users/inna/Documents/GitHub/chromedriver')
+    # context.browser = webdriver.Safari()
+    # context.driver = webdriver.Firefox(executable_path='/Users/inna/Documents/GitHub/geckodriver')
+
+    ### Headless Mode ###
+    options = webdriver.ChromeOptions()
+    # options.add_argument('headless')
+    options.add_argument("--window-size=1920,1080")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--proxy-server='direct://'")
+    options.add_argument("--proxy-bypass-list=*")
+    options.add_argument("--start-maximized")
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--ignore-certificate-errors')
+    context.driver = webdriver.Chrome(executable_path='/Users/inna/Documents/GitHub/chromedriver',chrome_options=options)
+
+    # context.driver.maximize_window()
     context.driver.implicitly_wait(4)
 
     context.driver.wait = WebDriverWait(context.driver, 10)

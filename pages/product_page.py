@@ -8,8 +8,7 @@ from time import sleep
 
 
 class ProductPage(Page):
-    ADD_TO_CART_BTN = (By.CSS_SELECTOR, '.single_add_to_cart_button button alt')
-    CART = (By.CSS_SELECTOR, '.header-cart-link')
+    ADD_TO_CART_BTN = (By.CSS_SELECTOR, '.single_add_to_cart_button')
     TOP_MENU_LINKS = (By.CSS_SELECTOR, '.header-nav>li.menu-item>a')
     IPHONE_PRODUCTS_LINKS = (By.CSS_SELECTOR, '#menu-item-469>ul.nav-dropdown>li>a')
     IPHONE_MENU_LINK = (By.XPATH, "//a[@class = 'nav-top-link' and contains(@href,'product-category/iphone')]")
@@ -21,9 +20,6 @@ class ProductPage(Page):
     def click_add_to_cart(self):
         self.wait_for_element_appear(*self.ADD_TO_CART_BTN)
         self.click(*self.ADD_TO_CART_BTN)
-
-    def click_cart(self):
-        self.click(*self.CART)
 
     def verify_correct_page_open(self, query):
         category = query
