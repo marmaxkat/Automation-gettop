@@ -1,16 +1,19 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from app.application import Application
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 bs_user = 'innaignatyeva2'
 bs_pw = '1Yhv5p8cCn16g6sCEnsV'
 
+
 def browser_init(context, test_name):
     """
     :param context: Behave context
     :param test_name: scenario.name
     """
+
     # options = webdriver.ChromeOptions()
     # options.add_argument('headless')
     # context.driver = webdriver.Chrome(chrome_options=options)
@@ -35,17 +38,35 @@ def browser_init(context, test_name):
     # context.driver = webdriver.Chrome(executable_path='/Users/inna/Documents/GitHub/chromedriver',chrome_options=options)
 
     ### BrowserStack ###
+    # url = f'http://{bs_user}:{bs_pw}@hub-cloud.browserstack.com/wd/hub'
+    # desired_cap = {
+    #     'browser': 'Chrome',
+    #     'browser_version': '87.0',
+    #     'os': 'Windows',
+    #     'os_version': '10',
+    #     'name': test_name
+    # }
+    # context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
+
+    ### BrowserStack mobile ###
     url = f'http://{bs_user}:{bs_pw}@hub-cloud.browserstack.com/wd/hub'
     desired_cap = {
-        'browser': 'Chrome',
-        'browser_version': '87.0',
-        'os': 'Windows',
-        'os_version': '10',
+        'realMobile': 'true',
+        'browserName': 'ios',
+        'device': 'iPhone 7',
+        'os_version': '12',
         'name': test_name
     }
-    context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
 
-    context.driver.maximize_window()
+    context.driver = webdriver.Remote(command_executor=url, desired_capabilities=desired_cap)
+
+    # ### Mobile Emulation ###
+    # mobile_emulation = {"deviceName": "Nexus 7"}
+    # chrome_options = Options()
+    # chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    # context.driver = webdriver.Chrome(executable_path="/Users/inna/Documents/GitHub/chromedriver", desired_capabilities=chrome_options.to_capabilities())
+
+    # context.driver.maximize_window()
     context.driver.implicitly_wait(4)
 
     context.driver.wait = WebDriverWait(context.driver, 10)

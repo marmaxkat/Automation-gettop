@@ -8,6 +8,15 @@ class Page:
         self.wait = WebDriverWait(self.driver, 15)
         self.base_url = 'https://gettop.us/'
 
+    def is_mobile(self, *locator):
+        test_mode = ''
+        e = self.driver.find_element(*locator)
+        if e.is_displayed():
+            test_mode = 'mobile'
+        else:
+            test_mode = 'web'
+        return test_mode
+
     def click(self, *locator):
         self.driver.find_element(*locator).click()
 

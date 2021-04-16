@@ -5,10 +5,12 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 
 class TopMenu(Page):
-    LOGO = (By.ID, 'logo')
+    LOGO = (By.CSS_SELECTOR, '#logo>a')
+    MOBILE_MENU = (By.CSS_SELECTOR, 'ul.mobile-nav>li.nav-icon>a')
     CART = (By.CSS_SELECTOR, 'ul.header-nav>li.cart-item>a.header-cart-link')
     TOP_MENU_LINKS = (By.CSS_SELECTOR, '.header-nav>li.menu-item>a')
     FIRST_MENU_LINK = (By.XPATH, "//li[@id='menu-item-469']//a[@class='nav-top-link']")
+    FIRST_MENU_LINK_MOBILE = (By.CSS_SELECTOR, 'ul.nav-vertical>li.menu-item-468>a')
     SLIDER = (By.CSS_SELECTOR, '.slider-wrapper')
     IPHONE_MENU_LINK = (By.XPATH, "//a[@class = 'nav-top-link' and contains(@href,'product-category/iphone')]")
 
@@ -23,7 +25,12 @@ class TopMenu(Page):
         self.click(*self.CART)
 
     def click_first_link_top_menu(self):
-        self.click(*self.FIRST_MENU_LINK)
+        test_mode = self.is_mobile(*self.MOBILE_MENU)
+        if test_mode == 'mobile':
+            self.click(*self.MOBILE_MENU)
+            self.click(*self.FIRST_MENU_LINK_MOBILE)
+        else:
+            self.click(*self.FIRST_MENU_LINK)
 
     def verify_main_page_opened(self):
         self.find_element(*self.SLIDER)
